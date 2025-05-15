@@ -7,7 +7,7 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
 
 [Imagem de Interface do Conversor Unicode em um navegador]
-*(Sugestão: Tire um print da tela da aplicação e adicione aqui. Ex: ![Screenshot](caminho/para/sua/imagem.png))*
+![image](https://github.com/user-attachments/assets/218a4326-50ee-4a3b-b024-298c3210f98b)
 
 Uma ferramenta web simples e offline para transformar texto e números em seus equivalentes **Mathematical Bold** e **Mathematical Bold Digits** do padrão Unicode. Ideal para estilizar textos em redes sociais, documentos ou onde quer que caracteres Unicode especiais sejam suportados.
 
