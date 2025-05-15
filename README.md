@@ -6,10 +6,10 @@
 [![CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
 
-[Imagem de Interface do Conversor Unicode em um navegador]
-![image](https://github.com/user-attachments/assets/218a4326-50ee-4a3b-b024-298c3210f98b)
 
-Uma ferramenta web simples e offline para transformar texto e números em seus equivalentes **Mathematical Bold** e **Mathematical Bold Digits** do padrão Unicode. Ideal para estilizar textos em redes sociais, documentos ou onde quer que caracteres Unicode especiais sejam suportados.
+![image](https://github.com/user-attachments/assets/a010320a-5c2b-4e1b-a879-2e449076e6fa)
+
+Uma ferramenta web simples, que pode ser usado offline para transformar texto e números em seus equivalentes **Mathematical Bold** e **Mathematical Bold Digits** do padrão Unicode. Ideal para estilizar textos em redes sociais, documentos ou onde quer que caracteres Unicode especiais sejam suportados.
 
 ## ✨ Funcionalidades
 
