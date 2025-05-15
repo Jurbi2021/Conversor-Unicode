@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformador para Negrito Matemático Unicode</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Fonte Inter para uma aparência limpa */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilos personalizados adicionais, se necessário */
+        .copy-feedback {
+            transition: opacity 0.5s ease-in-out;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-slate-900 to-slate-800 text-slate-100 min-h-screen flex flex-col items-center justify-center p-4 selection:bg-sky-500 selection:text-white">
+
+    <div class="bg-slate-800 shadow-2xl rounded-xl p-6 md:p-10 w-full max-w-2xl">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-sky-400">Conversor Unicode</h1>
+            <p class="text-slate-400 mt-2">Transforme texto e números em caracteres <strong class="text-sky-300">Mathematical Bold</strong>.</p>
+        </header>
+
+        <main>
+            <div class="mb-6">
+                <label for="inputText" class="block text-sm font-medium text-slate-300 mb-2">Texto Original:</label>
+                <textarea id="inputText" rows="5"
+                    class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg shadow-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder-slate-500 text-slate-100 transition duration-150 ease-in-out resize-none"
+                    placeholder="Digite seu texto aqui..."></textarea>
+            </div>
+
+            <div class="mb-6 text-center">
+                <button id="transformButton"
+                    class="w-full md:w-auto bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50 transform transition-all duration-150 ease-in-out hover:scale-105">
+                    Transformar Texto
+                </button>
+            </div>
+
+            <div class="mb-4">
+                <label for="outputText" class="block text-sm font-medium text-slate-300 mb-2">Texto Transformado:</label>
+                <textarea id="outputText" rows="5"
+                    class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg shadow-sm text-slate-100 transition duration-150 ease-in-out resize-none"
+                    readonly placeholder="O resultado aparecerá aqui..."></textarea>
+            </div>
+
+            <div class="text-center">
+                <button id="copyButton"
+                    class="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50 transform transition-all duration-150 ease-in-out hover:scale-105">
+                    Copiar Resultado
+                </button>
+                <span id="copyFeedback" class="ml-3 text-emerald-400 opacity-0 copy-feedback">Copiado!</span>
+            </div>
+        </main>
+
+        <footer class="mt-10 text-center text-xs text-slate-500">
+            <p>Salve este arquivo como HTML para usá-lo offline.</p>
+            <p class="mt-1">Acentos são processados tentando aplicar negrito à letra base.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Mapeamento de caracteres normais para seus equivalentes Unicode "Mathematical Bold"
+        const mathematicalBoldChars = {
+            // Letras Maiúsculas
+            'A': '\uD835\uDC00', 'B': '\uD835\uDC01', 'C': '\uD835\uDC02', 'D': '\uD835\uDC03', 'E': '\uD835\uDC04',
+            'F': '\uD835\uDC05', 'G': '\uD835\uDC06', 'H': '\uD835\uDC07', 'I': '\uD835\uDC08', 'J': '\uD835\uDC09',
+            'K': '\uD835\uDC0A', 'L': '\uD835\uDC0B', 'M': '\uD835\uDC0C', 'N': '\uD835\uDC0D', 'O': '\uD835\uDC0E',
+            'P': '\uD835\uDC0F', 'Q': '\uD835\uDC10', 'R': '\uD835\uDC11', 'S': '\uD835\uDC12', 'T': '\uD835\uDC13',
+            'U': '\uD835\uDC14', 'V': '\uD835\uDC15', 'W': '\uD835\uDC16', 'X': '\uD835\uDC17', 'Y': '\uD835\uDC18', 'Z': '\uD835\uDC19',
+            // Letras Minúsculas
+            'a': '\uD835\uDC1A', 'b': '\uD835\uDC1B', 'c': '\uD835\uDC1C', 'd': '\uD835\uDC1D', 'e': '\uD835\uDC1E',
+            'f': '\uD835\uDC1F', 'g': '\uD835\uDC20', 'h': '\uD835\uDC21', 'i': '\uD835\uDC22', 'j': '\uD835\uDC23',
+            'k': '\uD835\uDC24', 'l': '\uD835\uDC25', 'm': '\uD835\uDC26', 'n': '\uD835\uDC27', 'o': '\uD835\uDC28',
+            'p': '\uD835\uDC29', 'q': '\uD835\uDC2A', 'r': '\uD835\uDC2B', 's': '\uD835\uDC2C', 't': '\uD835\uDC2D',
+            'u': '\uD835\uDC2E', 'v': '\uD835\uDC2F', 'w': '\uD835\uDC30', 'x': '\uD835\uDC31', 'y': '\uD835\uDC32', 'z': '\uD835\uDC33',
+            // Dígitos
+            '0': '\uD835\uDFCE', '1': '\uD835\uDFCF', '2': '\uD835\uDFD0', '3': '\uD835\uDFD1', '4': '\uD835\uDFD2',
+            '5': '\uD835\uDFD3', '6': '\uD835\uDFD4', '7': '\uD835\uDFD5', '8': '\uD835\uDFD6', '9': '\uD835\uDFD7'
+        };
+
+        // Elementos do DOM
+        const inputText = document.getElementById('inputText');
+        const outputText = document.getElementById('outputText');
+        const transformButton = document.getElementById('transformButton');
+        const copyButton = document.getElementById('copyButton');
+        const copyFeedback = document.getElementById('copyFeedback');
+
+        // Função para transformar o texto
+        function transformText() {
+            const originalText = inputText.value;
+            let transformedText = "";
+
+            // Itera sobre cada caractere do texto original
+            // Usar for...of é importante para lidar corretamente com caracteres Unicode que podem ocupar mais de um code unit (como emojis ou alguns símbolos)
+            for (const char of originalText) {
+                // Verifica se o caractere tem um mapeamento direto para bold (letras não acentuadas e dígitos)
+                if (mathematicalBoldChars[char]) {
+                    transformedText += mathematicalBoldChars[char];
+                } else {
+                    // Se não há mapeamento direto, tenta normalizar o caractere (para lidar com acentos)
+                    // NFD (Normalization Form Canonical Decomposition) decompõe o caractere em sua letra base e acentos combinatórios
+                    // Exemplo: "é" (U+00E9) se torna "e" (U+0065) + "´" (U+0301)
+                    const normalized = char.normalize('NFD');
+                    const baseChar = normalized.charAt(0); // Pega a letra base
+                    const combiningMarks = normalized.substring(1); // Pega os acentos combinatórios (pode haver mais de um)
+
+                    // Verifica se a letra base tem um equivalente bold e se há acentos combinatórios
+                    if (mathematicalBoldChars[baseChar] && combiningMarks.length > 0) {
+                        // Aplica o bold à letra base e anexa os acentos combinatórios
+                        // AVISO: A renderização desta combinação (letra bold + acento) pode variar
+                        // entre diferentes navegadores, sistemas operacionais e fontes.
+                        // O acento pode não se alinhar perfeitamente com a letra bold.
+                        transformedText += mathematicalBoldChars[baseChar] + combiningMarks;
+                    } else {
+                        // Se a letra base não tem um equivalente bold (ex: um símbolo que foi normalizado),
+                        // ou se não há acentos combinatórios após a normalização (raro para acentuados comuns),
+                        // ou se o caractere original não foi decomposto (ex: um espaço, pontuação),
+                        // mantém o caractere original.
+                        transformedText += char;
+                    }
+                }
+            }
+            outputText.value = transformedText;
+        }
+
+        // Função para copiar o texto para a área de transferência
+        async function copyToClipboard() {
+            if (!outputText.value) return; // Não faz nada se não houver texto
+
+            try {
+                await navigator.clipboard.writeText(outputText.value);
+                copyFeedback.textContent = 'Copiado!';
+                copyFeedback.style.color = 'rgb(52 211 153)'; // Cor verde padrão
+                copyFeedback.style.opacity = '1';
+                setTimeout(() => {
+                    copyFeedback.style.opacity = '0';
+                }, 2000); // Feedback desaparece após 2 segundos
+            } catch (err) {
+                console.error('Falha ao copiar texto: ', err);
+                // Fallback para navegadores mais antigos (menos seguro e pode ser bloqueado)
+                try {
+                    outputText.select(); // Seleciona o texto
+                    outputText.setSelectionRange(0, 99999); // Para dispositivos móveis
+                    document.execCommand('copy'); // Tenta copiar
+                    copyFeedback.textContent = 'Copiado (fallback)!';
+                    copyFeedback.style.color = 'rgb(52 211 153)';
+                    copyFeedback.style.opacity = '1';
+                     setTimeout(() => {
+                        copyFeedback.style.opacity = '0';
+                    }, 2000);
+                } catch (execErr) {
+                    console.error('Falha no fallback de cópia: ', execErr);
+                    copyFeedback.textContent = 'Falha ao copiar!';
+                    copyFeedback.style.color = 'rgb(248 113 113)'; // Cor vermelha para erro
+                    copyFeedback.style.opacity = '1';
+                    setTimeout(() => {
+                        copyFeedback.style.opacity = '0';
+                    }, 3000);
+                }
+            }
+             // Desseleciona o texto após a tentativa de cópia para melhor UX
+            if (document.selection) { // IE
+                document.selection.empty();
+            } else if (window.getSelection) {
+                window.getSelection().removeAllRanges();
+            }
+            outputText.blur(); // Remove o foco do textarea
+        }
+
+        // Event Listeners
+        transformButton.addEventListener('click', transformText);
+        copyButton.addEventListener('click', copyToClipboard);
+
+    </script>
+</body>
+</html>
