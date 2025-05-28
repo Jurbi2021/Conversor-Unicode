@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transformador para Negrito Matemático Unicode</title>
+    <title>Transformador de Texto Unicode Avançado</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Fonte Inter para uma aparência limpa */
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Estilos personalizados adicionais, se necessário */
+        /* Estilos personalizados adicionais */
         .copy-feedback {
             transition: opacity 0.5s ease-in-out;
+        }
+        /* Estilo para o seletor ficar mais alinhado com o tema */
+        select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -21,11 +32,21 @@
 
     <div class="bg-slate-800 shadow-2xl rounded-xl p-6 md:p-10 w-full max-w-2xl">
         <header class="mb-8 text-center">
-            <h1 class="text-3xl md:text-4xl font-bold text-sky-400">Conversor Unicode</h1>
-            <p class="text-slate-400 mt-2">Transforme texto e números em caracteres <strong class="text-sky-300">Mathematical Bold</strong>.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-sky-400">Conversor Unicode Avançado</h1>
+            <p class="text-slate-400 mt-2">Transforme texto em diversos estilos Unicode.</p>
         </header>
 
         <main>
+            <div class="mb-6">
+                <label for="transformType" class="block text-sm font-medium text-slate-300 mb-2">Tipo de Transformação:</label>
+                <select id="transformType"
+                    class="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg shadow-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-slate-100 transition duration-150 ease-in-out">
+                    <option value="mathematicalBold">Mathematical Bold (Negrito)</option>
+                    <option value="mathematicalSansBold">Mathematical Sans-Serif Bold</option>
+                    <option value="regionalIndicator">Regional Indicator Symbols (Bandeiras)</option>
+                </select>
+            </div>
+
             <div class="mb-6">
                 <label for="inputText" class="block text-sm font-medium text-slate-300 mb-2">Texto Original:</label>
                 <textarea id="inputText" rows="5"
@@ -49,7 +70,7 @@
 
             <div class="text-center">
                 <button id="copyButton"
-                    class=" w-full md:justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50 transform transition-all duration-150 ease-in-out hover:scale-105">
+                    class="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50 transform transition-all duration-150 ease-in-out hover:scale-105">
                     Copiar Resultado
                 </button>
                 <span id="copyFeedback" class="ml-3 text-emerald-400 opacity-0 copy-feedback">Copiado!</span>
@@ -58,28 +79,49 @@
 
         <footer class="mt-10 text-center text-xs text-slate-500">
             <p>Salve este arquivo como HTML para usá-lo offline.</p>
-            <p class="mt-1">Acentos são processados tentando aplicar negrito à letra base.</p>
+            <p class="mt-1">Acentos são processados tentando aplicar o estilo à letra base. A renderização pode variar.</p>
+            <p class="mt-1">Regional Indicators funcionam melhor com pares de letras (ex: BR, US).</p>
         </footer>
     </div>
 
     <script>
-        // Mapeamento de caracteres normais para seus equivalentes Unicode "Mathematical Bold"
-        const mathematicalBoldChars = {
-            // Letras Maiúsculas
-            'A': '\uD835\uDC00', 'B': '\uD835\uDC01', 'C': '\uD835\uDC02', 'D': '\uD835\uDC03', 'E': '\uD835\uDC04',
-            'F': '\uD835\uDC05', 'G': '\uD835\uDC06', 'H': '\uD835\uDC07', 'I': '\uD835\uDC08', 'J': '\uD835\uDC09',
-            'K': '\uD835\uDC0A', 'L': '\uD835\uDC0B', 'M': '\uD835\uDC0C', 'N': '\uD835\uDC0D', 'O': '\uD835\uDC0E',
-            'P': '\uD835\uDC0F', 'Q': '\uD835\uDC10', 'R': '\uD835\uDC11', 'S': '\uD835\uDC12', 'T': '\uD835\uDC13',
-            'U': '\uD835\uDC14', 'V': '\uD835\uDC15', 'W': '\uD835\uDC16', 'X': '\uD835\uDC17', 'Y': '\uD835\uDC18', 'Z': '\uD835\uDC19',
-            // Letras Minúsculas
-            'a': '\uD835\uDC1A', 'b': '\uD835\uDC1B', 'c': '\uD835\uDC1C', 'd': '\uD835\uDC1D', 'e': '\uD835\uDC1E',
-            'f': '\uD835\uDC1F', 'g': '\uD835\uDC20', 'h': '\uD835\uDC21', 'i': '\uD835\uDC22', 'j': '\uD835\uDC23',
-            'k': '\uD835\uDC24', 'l': '\uD835\uDC25', 'm': '\uD835\uDC26', 'n': '\uD835\uDC27', 'o': '\uD835\uDC28',
-            'p': '\uD835\uDC29', 'q': '\uD835\uDC2A', 'r': '\uD835\uDC2B', 's': '\uD835\uDC2C', 't': '\uD835\uDC2D',
-            'u': '\uD835\uDC2E', 'v': '\uD835\uDC2F', 'w': '\uD835\uDC30', 'x': '\uD835\uDC31', 'y': '\uD835\uDC32', 'z': '\uD835\uDC33',
-            // Dígitos
-            '0': '\uD835\uDFCE', '1': '\uD835\uDFCF', '2': '\uD835\uDFD0', '3': '\uD835\uDFD1', '4': '\uD835\uDFD2',
-            '5': '\uD835\uDFD3', '6': '\uD835\uDFD4', '7': '\uD835\uDFD5', '8': '\uD835\uDFD6', '9': '\uD835\uDFD7'
+        // Mapeamentos de caracteres
+        const MAPPINGS = {
+            mathematicalBold: {
+                'A': '\uD835\uDC00', 'B': '\uD835\uDC01', 'C': '\uD835\uDC02', 'D': '\uD835\uDC03', 'E': '\uD835\uDC04',
+                'F': '\uD835\uDC05', 'G': '\uD835\uDC06', 'H': '\uD835\uDC07', 'I': '\uD835\uDC08', 'J': '\uD835\uDC09',
+                'K': '\uD835\uDC0A', 'L': '\uD835\uDC0B', 'M': '\uD835\uDC0C', 'N': '\uD835\uDC0D', 'O': '\uD835\uDC0E',
+                'P': '\uD835\uDC0F', 'Q': '\uD835\uDC10', 'R': '\uD835\uDC11', 'S': '\uD835\uDC12', 'T': '\uD835\uDC13',
+                'U': '\uD835\uDC14', 'V': '\uD835\uDC15', 'W': '\uD835\uDC16', 'X': '\uD835\uDC17', 'Y': '\uD835\uDC18', 'Z': '\uD835\uDC19',
+                'a': '\uD835\uDC1A', 'b': '\uD835\uDC1B', 'c': '\uD835\uDC1C', 'd': '\uD835\uDC1D', 'e': '\uD835\uDC1E',
+                'f': '\uD835\uDC1F', 'g': '\uD835\uDC20', 'h': '\uD835\uDC21', 'i': '\uD835\uDC22', 'j': '\uD835\uDC23',
+                'k': '\uD835\uDC24', 'l': '\uD835\uDC25', 'm': '\uD835\uDC26', 'n': '\uD835\uDC27', 'o': '\uD835\uDC28',
+                'p': '\uD835\uDC29', 'q': '\uD835\uDC2A', 'r': '\uD835\uDC2B', 's': '\uD835\uDC2C', 't': '\uD835\uDC2D',
+                'u': '\uD835\uDC2E', 'v': '\uD835\uDC2F', 'w': '\uD835\uDC30', 'x': '\uD835\uDC31', 'y': '\uD835\uDC32', 'z': '\uD835\uDC33',
+                '0': '\uD835\uDFCE', '1': '\uD835\uDFCF', '2': '\uD835\uDFD0', '3': '\uD835\uDFD1', '4': '\uD835\uDFD2',
+                '5': '\uD835\uDFD3', '6': '\uD835\uDFD4', '7': '\uD835\uDFD5', '8': '\uD835\uDFD6', '9': '\uD835\uDFD7'
+            },
+            mathematicalSansBold: { // Códigos verificados e corretos
+                'A': '\uD835\uDDDA', 'B': '\uD835\uDDDB', 'C': '\uD835\uDDDC', 'D': '\uD835\uDDDD', 'E': '\uD835\uDDDE',
+                'F': '\uD835\uDDDF', 'G': '\uD835\uDDE0', 'H': '\uD835\uDDE1', 'I': '\uD835\uDDE2', 'J': '\uD835\uDDE3',
+                'K': '\uD835\uDDE4', 'L': '\uD835\uDDE5', 'M': '\uD835\uDDE6', 'N': '\uD835\uDDE7', 'O': '\uD835\uDDE8', // 𝗢
+                'P': '\uD835\uDDE9', 'Q': '\uD835\uDDEA', 'R': '\uD835\uDDEB', 'S': '\uD835\uDDEC', 'T': '\uD835\uDDED',
+                'U': '\uD835\uDDEE', 'V': '\uD835\uDDEF', 'W': '\uD835\uDDF0', 'X': '\uD835\uDDF1', 'Y': '\uD835\uDDF2', 'Z': '\uD835\uDDF3',
+                'a': '\uD835\uDDF4', 'b': '\uD835\uDDF5', 'c': '\uD835\uDDF6', 'd': '\uD835\uDDF7', 'e': '\uD835\uDDF8', // 𝗮 (para o 'á')
+                'f': '\uD835\uDDF9', 'g': '\uD835\uDDFA', 'h': '\uD835\uDDFB', 'i': '\uD835\uDDFC', 'j': '\uD835\uDDFD',
+                'k': '\uD835\uDDFE', 'l': '\uD835\uDDFF', 'm': '\uD835\uDE00', 'n': '\uD835\uDE01', 'o': '\uD835\uDE02', // 𝗹
+                'p': '\uD835\uDE03', 'q': '\uD835\uDE04', 'r': '\uD835\uDE05', 's': '\uD835\uDE06', 't': '\uD835\uDE07',
+                'u': '\uD835\uDE08', 'v': '\uD835\uDE09', 'w': '\uD835\uDE0A', 'x': '\uD835\uDE0B', 'y': '\uD835\uDE0C', 'z': '\uD835\uDE0D',
+                '0': '\uD835\uDFEC', '1': '\uD835\uDFED', '2': '\uD835\uDFEE', '3': '\uD835\uDFEF', '4': '\uD835\uDFF0',
+                '5': '\uD835\uDFF1', '6': '\uD835\uDFF2', '7': '\uD835\uDFF3', '8': '\uD835\uDFF4', '9': '\uD835\uDFF5'
+            },
+            regionalIndicator: {
+                'A': '\uD83C\uDDE6', 'B': '\uD83C\uDDE7', 'C': '\uD83C\uDDE8', 'D': '\uD83C\uDDE9', 'E': '\uD83C\uDDEA',
+                'F': '\uD83C\uDDEB', 'G': '\uD83C\uDDEC', 'H': '\uD83C\uDDED', 'I': '\uD83C\uDDEE', 'J': '\uD83C\uDDEF',
+                'K': '\uD83C\uDDF0', 'L': '\uD83C\uDDF1', 'M': '\uD83C\uDDF2', 'N': '\uD83C\uDDF3', 'O': '\uD83C\uDDF4',
+                'P': '\uD83C\uDDF5', 'Q': '\uD83C\uDDF6', 'R': '\uD83C\uDDF7', 'S': '\uD83C\uDDF8', 'T': '\uD83C\uDDF9',
+                'U': '\uD83C\uDDFA', 'V': '\uD83C\uDDFB', 'W': '\uD83C\uDDFC', 'X': '\uD83C\uDDFD', 'Y': '\uD83C\uDDFE', 'Z': '\uD83C\uDDFF'
+            }
         };
 
         // Elementos do DOM
@@ -88,48 +130,74 @@
         const transformButton = document.getElementById('transformButton');
         const copyButton = document.getElementById('copyButton');
         const copyFeedback = document.getElementById('copyFeedback');
+        const transformTypeSelect = document.getElementById('transformType');
 
         // Função para transformar o texto
         function transformText() {
             const originalText = inputText.value;
+            const selectedType = transformTypeSelect.value;
+            const currentMap = MAPPINGS[selectedType];
             let transformedText = "";
 
-            // Itera sobre cada caractere do texto original
-            // Usar for...of é importante para lidar corretamente com caracteres Unicode que podem ocupar mais de um code unit (como emojis ou alguns símbolos)
-            for (const char of originalText) {
-                // Verifica se o caractere tem um mapeamento direto para bold (letras não acentuadas e dígitos)
-                if (mathematicalBoldChars[char]) {
-                    transformedText += mathematicalBoldChars[char];
-                } else {
-                    // Se não há mapeamento direto, tenta normalizar o caractere (para lidar com acentos)
-                    // NFD (Normalization Form Canonical Decomposition) decompõe o caractere em sua letra base e acentos combinatórios
-                    // Exemplo: "é" (U+00E9) se torna "e" (U+0065) + "´" (U+0301)
-                    const normalized = char.normalize('NFD');
-                    const baseChar = normalized.charAt(0); // Pega a letra base
-                    const combiningMarks = normalized.substring(1); // Pega os acentos combinatórios (pode haver mais de um)
+            // Logs de depuração adicionados
+            console.clear(); // Limpa o console para cada nova transformação
+            console.log("--- Iniciando Transformação ---");
+            console.log("Texto Original:", originalText);
+            console.log("Tipo Selecionado:", selectedType);
+            // console.log("Mapa Atual (parcial para brevidade):", Object.keys(currentMap || {}).slice(0, 5).reduce((obj, key) => { obj[key] = currentMap[key]; return obj; }, {}));
 
-                    // Verifica se a letra base tem um equivalente bold e se há acentos combinatórios
-                    if (mathematicalBoldChars[baseChar] && combiningMarks.length > 0) {
-                        // Aplica o bold à letra base e anexa os acentos combinatórios
-                        // AVISO: A renderização desta combinação (letra bold + acento) pode variar
-                        // entre diferentes navegadores, sistemas operacionais e fontes.
-                        // O acento pode não se alinhar perfeitamente com a letra bold.
-                        transformedText += mathematicalBoldChars[baseChar] + combiningMarks;
+
+            if (!currentMap) {
+                outputText.value = "Tipo de transformação inválido.";
+                console.error("Mapa de transformação não encontrado para o tipo:", selectedType);
+                return;
+            }
+
+            for (const char of originalText) {
+                console.log(`\nProcessando caractere: '${char}' (Unicode: ${char.charCodeAt(0).toString(16)})`);
+                let charToTransform = char;
+
+                if (selectedType === 'regionalIndicator') {
+                    charToTransform = char.toUpperCase();
+                    console.log(`  Regional Indicator: charToTransform agora é '${charToTransform}'`);
+                }
+
+                if (currentMap[charToTransform]) {
+                    transformedText += currentMap[charToTransform];
+                    console.log(`  Mapeamento direto: '${charToTransform}' -> '${currentMap[charToTransform]}' (Unicode: ${currentMap[charToTransform].charCodeAt(0).toString(16)}, ${currentMap[charToTransform].length > 1 ? currentMap[charToTransform].charCodeAt(1).toString(16) : ''})`);
+                } else {
+                    console.log(`  Sem mapeamento direto para '${charToTransform}'.`);
+                    if (selectedType !== 'regionalIndicator') {
+                        const normalized = char.normalize('NFD');
+                        const baseChar = normalized.charAt(0);
+                        const combiningMarks = normalized.substring(1);
+                        console.log(`  Normalizado: '${normalized}', Base: '${baseChar}', Acentos: '${combiningMarks}' (códigos acentos: ${Array.from(combiningMarks).map(c => c.charCodeAt(0).toString(16)).join(' ')})`);
+
+                        if (currentMap[baseChar] && combiningMarks.length > 0) {
+                            transformedText += currentMap[baseChar] + combiningMarks;
+                            console.log(`  Mapeamento de baseChar: '${baseChar}' -> '${currentMap[baseChar]}'. Adicionado com acentos.`);
+                        } else if (currentMap[baseChar]) { // Caso seja uma letra base sem acentos mas que precisou de normalização (raro)
+                            transformedText += currentMap[baseChar];
+                            console.log(`  Mapeamento de baseChar (sem acentos pós-normalização): '${baseChar}' -> '${currentMap[baseChar]}'`);
+                        }
+                         else {
+                            transformedText += char;
+                            console.log(`  Mantido original (sem mapeamento para baseChar ou sem acentos combinatórios significativos): '${char}'`);
+                        }
                     } else {
-                        // Se a letra base não tem um equivalente bold (ex: um símbolo que foi normalizado),
-                        // ou se não há acentos combinatórios após a normalização (raro para acentuados comuns),
-                        // ou se o caractere original não foi decomposto (ex: um espaço, pontuação),
-                        // mantém o caractere original.
                         transformedText += char;
+                        console.log(`  Mantido original (Regional Indicator sem mapeamento): '${char}'`);
                     }
                 }
             }
+            console.log("--- Transformação Concluída ---");
+            console.log("Texto Transformado Final:", transformedText);
             outputText.value = transformedText;
         }
 
         // Função para copiar o texto para a área de transferência
         async function copyToClipboard() {
-            if (!outputText.value) return; // Não faz nada se não houver texto
+            if (!outputText.value) return;
 
             try {
                 await navigator.clipboard.writeText(outputText.value);
@@ -138,14 +206,13 @@
                 copyFeedback.style.opacity = '1';
                 setTimeout(() => {
                     copyFeedback.style.opacity = '0';
-                }, 2000); // Feedback desaparece após 2 segundos
+                }, 2000);
             } catch (err) {
                 console.error('Falha ao copiar texto: ', err);
-                // Fallback para navegadores mais antigos (menos seguro e pode ser bloqueado)
                 try {
-                    outputText.select(); // Seleciona o texto
+                    outputText.select();
                     outputText.setSelectionRange(0, 99999); // Para dispositivos móveis
-                    document.execCommand('copy'); // Tenta copiar
+                    document.execCommand('copy');
                     copyFeedback.textContent = 'Copiado (fallback)!';
                     copyFeedback.style.color = 'rgb(52 211 153)';
                     copyFeedback.style.opacity = '1';
@@ -162,7 +229,7 @@
                     }, 3000);
                 }
             }
-             // Desseleciona o texto após a tentativa de cópia para melhor UX
+            // Desseleciona o texto após a tentativa de cópia para melhor UX
             if (document.selection) { // IE
                 document.selection.empty();
             } else if (window.getSelection) {
